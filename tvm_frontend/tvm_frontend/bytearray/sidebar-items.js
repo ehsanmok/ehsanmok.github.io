@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["TVMByteArray","A struct holding the TVM byte-array."]]});

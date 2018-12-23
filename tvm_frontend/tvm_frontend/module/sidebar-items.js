@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Module","Wrapper around TVM module handle which contains an entry function which can be applied to an imported module through [`entry_func`] and to check whether the module has be dropped use [`is_released`]."]]});

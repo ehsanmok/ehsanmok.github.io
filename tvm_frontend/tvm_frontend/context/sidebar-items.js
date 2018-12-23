@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["TVMContext","Represents the underlying device context. Default is cpu."],["TVMDeviceType","Device type which can be from a supported device name. See the supported devices  in TVM project."]]});
