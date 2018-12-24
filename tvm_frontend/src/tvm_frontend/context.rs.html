@@ -278,8 +278,10 @@
 <span id="278">278</span>
 <span id="279">279</span>
 <span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! Provides [`TVMContext`] and related device specific informations.</span>
+<span class="doccomment">//! Provides [`TVMContext`] and related device specific queries.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Create a new context by device type (cpu is 1) and device id.</span>
 <span class="doccomment">//!</span>
@@ -290,7 +292,8 @@
 <span class="doccomment">//! let cpu0 = TVMContext::cpu(0);</span>
 <span class="doccomment">//! assert_eq!(ctx, cpu0);</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! Or from supported device name.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Or from a supported device name.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//! let cpu0 = TVMContext::from(&quot;cpu&quot;);</span>
@@ -308,8 +311,8 @@
 <span class="kw">use</span> <span class="ident">ts</span>;
 <span class="kw">use</span> <span class="prelude-ty">Result</span>;
 
-<span class="doccomment">/// Device type which can be from a supported device name. See the supported devices</span>
-<span class="doccomment">/// in [TVM](https://github.com/dmlc/tvm) project.</span>
+<span class="doccomment">/// Device type can be from a supported device name. See the supported devices</span>
+<span class="doccomment">/// in [TVM](https://github.com/dmlc/tvm).</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Example</span>
 <span class="doccomment">///</span>
@@ -409,7 +412,8 @@
 <span class="doccomment">/// assert!(ctx.exist());</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// It is possible to query the context and get information such as</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// It is possible to query the underlying context as follows</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// println!(&quot;maximun threads per block: {}&quot;, ctx.max_threads_per_block());</span>

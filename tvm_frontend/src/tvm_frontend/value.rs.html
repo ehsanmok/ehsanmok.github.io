@@ -487,9 +487,10 @@
 <span id="487">487</span>
 <span id="488">488</span>
 <span id="489">489</span>
+<span id="490">490</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! This module implements [`TVMArgValue`] and [`TVMRetValue`] types and their conversions</span>
-<span class="doccomment">//! to other support TVMValue. `TVMRetValue` is the owned version of `TVMArgValue`.</span>
+<span class="doccomment">//! to other supported `TVMValues`. `TVMRetValue` is the owned version of `TVMArgValue`.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
@@ -534,7 +535,7 @@
     <span class="ident">Return</span>,
 }
 
-<span class="doccomment">/// Wrapper around underlying TVMValue.</span>
+<span class="doccomment">/// Wrapper around the underlying `TVMValue`.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TVMValue</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">kind</span>: <span class="ident">ValueKind</span>,
@@ -707,8 +708,8 @@
     }
 }
 
-<span class="doccomment">/// This type is needed for passing supported values as arguments to [`call_packed!`]</span>
-<span class="doccomment">/// or [`function::Builder`]. Checkout the methods and from conversions.</span>
+<span class="doccomment">/// This type is needed for passing the supported values as arguments to [`call_packed!`]</span>
+<span class="doccomment">/// or [`function::Builder`]. Checkout the methods for conversions.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Example</span>
 <span class="doccomment">///</span>
@@ -736,7 +737,7 @@
     }
 }
 
-<span class="doccomment">/// Main way to create a TVMArgValue from suported Rust&#39;s values.</span>
+<span class="doccomment">/// Main way to create a TVMArgValue from suported Rust values.</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>: <span class="lifetime">&#39;b</span>, <span class="ident">T</span>: <span class="lifetime">&#39;b</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TVMArgValue</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">TVMValue</span>: <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="ident">T</span><span class="op">&gt;</span>,
@@ -756,6 +757,7 @@
 <span class="doccomment">/// let arg = TVMRetValue::from(&amp;ctx);</span>
 <span class="doccomment">/// assert_eq!(arg.to_ctx(), ctx);</span>
 <span class="doccomment">/// ```</span>
+<span class="comment">// TODO: WIP for unification of runtime and frontend</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TVMRetValue</span> {
     <span class="kw">pub</span> <span class="ident">value</span>: <span class="ident">TVMValue</span>,
@@ -767,7 +769,7 @@
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">value</span>: <span class="ident">TVMValue</span>, <span class="ident">type_code</span>: <span class="ident">TypeCode</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">value</span>,
-            <span class="ident">box_value</span>: <span class="kw">box</span> (),
+            <span class="ident">box_value</span>: <span class="kw">box</span> (), <span class="comment">// starting the unification</span>
             <span class="ident">type_code</span>,
         }
     }

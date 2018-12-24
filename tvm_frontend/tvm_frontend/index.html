@@ -1,9 +1,9 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `tvm_frontend` crate."><meta name="keywords" content="rust, rustlang, rust-lang, tvm_frontend"><title>tvm_frontend - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Crate tvm_frontend</p><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all tvm_frontend's items</p></a><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'tvm_frontend', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/tvm_frontend/lib.rs.html#1-100' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>tvm_frontend</a></span></h1><div class='docblock'><p><a href="https://github.com/dmlc/tvm">TVM</a> is a compiler stack for deep learning systems.</p>
-<p>This crate provides idiomatic Rust API for TVM runtime frontend.</p>
-<p>One particular usage is that given an optimized deep learning model,
-compiled with TVM, one can load the model artifacts which includes a shared library
-<code>lib.so</code>, <code>graph.json</code> and byte-array <code>param.params</code>
-in Rust to create a runtime, run the model for some inputs and get the
+<p>This crate provides an idiomatic Rust API for TVM runtime frontend.</p>
+<p>One particular use case is that given optimized deep learning model artifacts,
+already compiled with TVM, which include a shared library
+<code>lib.so</code>, <code>graph.json</code> and a byte-array <code>param.params</code>, one can load them
+in Rust to create a graph runtime. Then, run the model for some inputs and get the
 desired predictions all in Rust.</p>
 <p>Checkout the <code>examples</code> repository for more details.</p>
 </div><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
@@ -13,7 +13,7 @@ desired predictions all in Rust.</p>
                            <td><a class="mod" href="bytearray/index.html"
                                   title='mod tvm_frontend::bytearray'>bytearray</a></td>
                            <td class='docblock-short'>
-                                <p>Provides <a href="../tvm_frontend/bytearray/struct.TVMByteArray.html" title="`TVMByteArray`"><code>TVMByteArray</code></a> which is used for passing the model parameters
+                                <p>Provides <a href="../tvm_frontend/bytearray/struct.TVMByteArray.html" title="`TVMByteArray`"><code>TVMByteArray</code></a> used for passing the model parameters
 (stored as byte-array) to a runtime module.</p>
 
                            </td>
@@ -22,7 +22,7 @@ desired predictions all in Rust.</p>
                            <td><a class="mod" href="context/index.html"
                                   title='mod tvm_frontend::context'>context</a></td>
                            <td class='docblock-short'>
-                                <p>Provides <a href="../tvm_frontend/context/struct.TVMContext.html" title="`TVMContext`"><code>TVMContext</code></a> and related device specific informations.</p>
+                                <p>Provides <a href="../tvm_frontend/context/struct.TVMContext.html" title="`TVMContext`"><code>TVMContext</code></a> and related device specific queries.</p>
 
                            </td>
                        </tr>
@@ -38,7 +38,7 @@ desired predictions all in Rust.</p>
                            <td><a class="mod" href="function/index.html"
                                   title='mod tvm_frontend::function'>function</a></td>
                            <td class='docblock-short'>
-                                <p>This module provides idiomatic Rust API for creating and working with TVM functions.</p>
+                                <p>This module provides an idiomatic Rust API for creating and working with TVM functions.</p>
 
                            </td>
                        </tr>
@@ -46,7 +46,7 @@ desired predictions all in Rust.</p>
                            <td><a class="mod" href="module/index.html"
                                   title='mod tvm_frontend::module'>module</a></td>
                            <td class='docblock-short'>
-                                <p>Provides <a href="../tvm_frontend/module/struct.Module.html" title="`Module`"><code>Module</code></a> type and methods for working with runtime TVM modules.</p>
+                                <p>Provides the <a href="../tvm_frontend/module/struct.Module.html" title="`Module`"><code>Module</code></a> type and methods for working with runtime TVM modules.</p>
 
                            </td>
                        </tr>
@@ -54,8 +54,8 @@ desired predictions all in Rust.</p>
                            <td><a class="mod" href="ndarray/index.html"
                                   title='mod tvm_frontend::ndarray'>ndarray</a></td>
                            <td class='docblock-short'>
-                                <p>This module implements <a href="../tvm_frontend/ndarray/struct.NDArray.html" title="`NDArray`"><code>NDArray</code></a> type for working with TVM tensors or
-covertsion from Rust's ndarray to TVM <code>NDArray</code>.</p>
+                                <p>This module implements the <a href="../tvm_frontend/ndarray/struct.NDArray.html" title="`NDArray`"><code>NDArray</code></a> type for working with <em>TVM tensors</em> or
+coverting from a Rust's ndarray to TVM <code>NDArray</code>.</p>
 
                            </td>
                        </tr>
@@ -63,7 +63,7 @@ covertsion from Rust's ndarray to TVM <code>NDArray</code>.</p>
                            <td><a class="mod" href="ty/index.html"
                                   title='mod tvm_frontend::ty'>ty</a></td>
                            <td class='docblock-short'>
-                                <p>This module implements the required conversion from Rust types to TVM types.</p>
+                                <p>This module implements the required conversions from Rust types to TVM types.</p>
 
                            </td>
                        </tr>
@@ -72,7 +72,7 @@ covertsion from Rust's ndarray to TVM <code>NDArray</code>.</p>
                                   title='mod tvm_frontend::value'>value</a></td>
                            <td class='docblock-short'>
                                 <p>This module implements <a href="../tvm_frontend/value/struct.TVMArgValue.html" title="`TVMArgValue`"><code>TVMArgValue</code></a> and <a href="../tvm_frontend/value/struct.TVMRetValue.html" title="`TVMRetValue`"><code>TVMRetValue</code></a> types and their conversions
-to other support TVMValue. <code>TVMRetValue</code> is the owned version of <code>TVMArgValue</code>.</p>
+to other supported <code>TVMValues</code>. <code>TVMRetValue</code> is the owned version of <code>TVMArgValue</code>.</p>
 
                            </td>
                        </tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
@@ -81,8 +81,8 @@ to other support TVMValue. <code>TVMRetValue</code> is the owned version of <cod
                            <td><a class="macro" href="macro.call_packed.html"
                                   title='macro tvm_frontend::call_packed'>call_packed</a></td>
                            <td class='docblock-short'>
-                                <p>Convenient macro for calling TVM packed functions by providing
-function identifier and the arguments. This macro outputs a <code>Result</code>
+                                <p>Convenient macro for calling TVM packed functions by providing a
+function identifier and some arguments. This macro outputs a <code>Result</code> type
 and let user to perform proper error handling.</p>
 
                            </td>

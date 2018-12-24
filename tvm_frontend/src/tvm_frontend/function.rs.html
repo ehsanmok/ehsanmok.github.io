@@ -503,14 +503,22 @@
 <span id="503">503</span>
 <span id="504">504</span>
 <span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! This module provides idiomatic Rust API for creating and working with TVM functions.</span>
+<span class="doccomment">//! This module provides an idiomatic Rust API for creating and working with TVM functions.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! For calling an already registered TVM function use [`function::Builder`] and to register</span>
-<span class="doccomment">//! a TVM packed function from Rust either use [`function::register`] or the</span>
-<span class="doccomment">//! macro [`register_global_func`].</span>
+<span class="doccomment">//! For calling an already registered TVM function use [`function::Builder`]</span>
+<span class="doccomment">//! To register a TVM packed function from Rust side either</span>
+<span class="doccomment">//! use [`function::register`] or the macro [`register_global_func`].</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! See the `tests` and `examples` repository for usage examples.</span>
+<span class="doccomment">//! See the tests and examples repository for more examples.</span>
 
 <span class="kw">use</span> <span class="ident">std</span>::{
     <span class="ident">ffi</span>::{<span class="ident">CStr</span>, <span class="ident">CString</span>},
@@ -566,8 +574,9 @@
 }
 
 <span class="doccomment">/// Wrapper around TVM function handle which includes `is_global`</span>
-<span class="doccomment">/// indicating whether the function is global or not and `is_released`</span>
-<span class="doccomment">/// to help for dropping the function handle.</span>
+<span class="doccomment">/// indicating whether the function is global or not, `is_released`</span>
+<span class="doccomment">/// to hint dropping the function handle and `is_cloned` showing</span>
+<span class="doccomment">/// not to drop a cloned function from Rust side.</span>
 <span class="doccomment">/// The value of these fields can be accessed through their respective methods.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Hash</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Function</span> {
@@ -612,6 +621,12 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_released</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">is_released</span>
     }
+
+    <span class="doccomment">/// Returns `true` if the underlying TVM function has been cloned</span>
+    <span class="doccomment">/// from the frontend and `false` otherwise.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_cloned</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">is_cloned</span>
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Function</span> {
@@ -639,7 +654,8 @@
 }
 
 <span class="doccomment">/// Function builder in order to create and call functions.</span>
-<span class="doccomment">/// *Note:* Currently TVM functions accept at most one return value.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// *Note:* Currently TVM functions accept *at most* one return value.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Default</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Builder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">pub</span> <span class="ident">func</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Function</span><span class="op">&gt;</span>,
@@ -665,7 +681,7 @@
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Pushes a [`TVMArgValue`] into the function.</span>
+    <span class="doccomment">/// Pushes a [`TVMArgValue`] into the function argument buffer.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">arg</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">arg</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">TVMValue</span>: <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="ident">T</span><span class="op">&gt;</span>,
@@ -687,7 +703,7 @@
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Pushes multiple [`TVMArgValue`]s into the function.</span>
+    <span class="doccomment">/// Pushes multiple [`TVMArgValue`]s into the function argument buffer.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">args</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">T</span>: <span class="lifetime">&#39;b</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span>, <span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">args</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="ident">T</span><span class="op">&gt;</span>,
@@ -701,7 +717,7 @@
     }
 
     <span class="doccomment">/// Sets an output for a function that requirs a mutable output to be provided.</span>
-    <span class="doccomment">/// See the `basics` in `tests` for an example.</span>
+    <span class="doccomment">/// See the `basics` in tests for an example.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_output</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">T</span>: <span class="lifetime">&#39;b</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">arg</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">TVMValue</span>: <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="ident">T</span><span class="op">&gt;</span>,
@@ -721,7 +737,7 @@
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Calls the function that created from builder.</span>
+    <span class="doccomment">/// Calls the function that created from `Builder`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invoke</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TVMRetValue</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">clone</span>()(())
     }
@@ -862,7 +878,7 @@
 }
 
 <span class="doccomment">/// Registers a Rust function with signature</span>
-<span class="doccomment">/// `fn(&amp;[TVMArgValue]) -&gt; Result&lt;TVMRetValue&lt;&#39;static&gt;&gt;`</span>
+<span class="doccomment">/// `fn(&amp;[TVMArgValue]) -&gt; Result&lt;TVMRetValue&gt;`</span>
 <span class="doccomment">/// as a **global TVM packed function** from frontend to TVM backend.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Use [`register_global_func`] if overriding an existing global TVM function</span>
@@ -871,7 +887,7 @@
 <span class="doccomment">/// ## Example</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// fn sum(args: &amp;[TVMArgValue]) -&gt; Result&lt;TVMRetValue&lt;&#39;static&gt;&gt; {</span>
+<span class="doccomment">/// fn sum(args: &amp;[TVMArgValue]) -&gt; Result&lt;TVMRetValue&gt; {</span>
 <span class="doccomment">///     let mut ret = 0;</span>
 <span class="doccomment">///     for arg in args.iter() {</span>
 <span class="doccomment">///         ret += arg.to_int();</span>
@@ -944,8 +960,8 @@
     }}
 }
 
-<span class="doccomment">/// Convenient macro for calling TVM packed functions by providing</span>
-<span class="doccomment">/// function identifier and the arguments. This macro outputs a `Result`</span>
+<span class="doccomment">/// Convenient macro for calling TVM packed functions by providing a</span>
+<span class="doccomment">/// function identifier and some arguments. This macro outputs a `Result` type</span>
 <span class="doccomment">/// and let user to perform proper error handling.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// **Note**: this macro does *not* expect an outside mutable output. To</span>

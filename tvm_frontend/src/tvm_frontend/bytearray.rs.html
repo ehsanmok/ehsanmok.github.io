@@ -70,19 +70,17 @@
 <span id="70">70</span>
 <span id="71">71</span>
 <span id="72">72</span>
-<span id="73">73</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! Provides [`TVMByteArray`] which is used for passing the model parameters</span>
+<span class="doccomment">//! Provides [`TVMByteArray`] used for passing the model parameters</span>
 <span class="doccomment">//! (stored as byte-array) to a runtime module.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! This function can be obtained from a graph runtime module loading the model.</span>
 <span class="doccomment">//! For more detail, please see the example `resnet` in `examples` repository.</span>
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_char</span>;
 
 <span class="kw">use</span> <span class="ident">ts</span>;
 
-<span class="doccomment">/// A struct holding the TVM byte-array.</span>
+<span class="doccomment">/// A struct holding TVM byte-array.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Example</span>
 <span class="doccomment">///</span>

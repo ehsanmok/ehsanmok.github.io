@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["empty","Creates an empty NDArray given shape, context and dtype."]],"struct":[["NDArray","See the `module-level documentation` for more details."]],"trait":[["Num32","A trait for the supported 32bits numerical types in frontend."]]});
+initSidebarItems({"fn":[["empty","Allocates and creates an empty NDArray given the shape, context and dtype."]],"struct":[["NDArray","See the `module-level documentation` for more details."]],"trait":[["Num32","A trait for the supported 32bits numerical types in frontend."]]});
