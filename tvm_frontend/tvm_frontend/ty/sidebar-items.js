@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["TypeCode","TVM Type codes"]],"struct":[["TVMType","See the module-level documentation for more details."]]});

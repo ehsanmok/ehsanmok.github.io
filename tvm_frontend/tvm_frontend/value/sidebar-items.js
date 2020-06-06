@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["TVMArgValue","This type is needed for passing the supported values as arguments to [`call_packed!`] or [`function::Builder`]. Checkout the methods for conversions."],["TVMRetValue","TVMRetValue is an owned TVMArgValue."],["TVMValue","Wrapper around the underlying `TVMValue`."]]});
